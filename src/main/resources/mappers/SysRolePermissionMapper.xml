@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sandnul.repository.SysRolePermissionMapper">
+    <!-- 根据角色id删除角色权限信息 -->
+    <delete id="deleteRolePermissionByRoleId">
+		delete from
+		${tableprefix}_role_permission
+		where
+		role_id in(${ids})
+	</delete>
+    <!-- 根据权限id删除角色权限信息 -->
+    <delete id="deleteRolePermissionByPermissionId">
+		delete from
+		${tableprefix}_role_permission
+		where
+		permission_id =#{id}
+	</delete>
+	<!-- 根据角色id权限id(权限id可多个)删除角色权限信息 -->
+	<delete id="deleteUserRoleByRoleIdPermissionIds">
+		delete from
+		${tableprefix}_role_permission
+		where
+		role_id=#{roleId} and permission_id in(${permissionIds})
+	</delete>
+	<!-- 添加角色权限信息 -->
+	<insert id="insertSysRolePermisson">
+		insert  into ${tableprefix}_role_permission(role_id,permission_id)
+		values(#{roleId},#{permissionId})
+	</insert>
+
+	<select id="findAllRolePermissoin" resultType="com.sandnul.domain.security.SysRolePermisson">
+        select sr.id roleId ,sr.name roleName,sp.id permissionId,sp.patchString
+        from ${tableprefix}_role_permission srp
+         join ${tableprefix}_role sr  on sr.id = srp.role_id
+         join ${tableprefix}_permission sp on srp.permission_id = sp.id and sp.patchString!=''
+    </select>
+</mapper>

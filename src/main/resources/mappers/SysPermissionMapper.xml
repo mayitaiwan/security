@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sandnul.repository.SysPermissionMapper">
+    <!--通过用户账号查找权限-->
+    <select id="findPermissionsByUserAcccount" resultType="com.sandnul.domain.security.SysPermission">
+        select sp.id,sp.description,sp.name,sp.pid,sp.url,sp.patchString
+        from ${tableprefix}_user su
+         join ${tableprefix}_user_role  sur on su.id = sur.user_id
+         join ${tableprefix}_role_permission srp on sur.role_id = srp.role_id
+         join ${tableprefix}_permission sp on srp.permission_id = sp.id
+        where su.userAccount = #{userAccount} and sp.menuFlag=1 order by sp.orderNumber
+    </select>
+    <!--查找所有权限-->
+    <select id="selectAllPermissions" resultType="com.sandnul.domain.security.SysPermission">
+        select sp.id,sp.description,sp.name,sp.pid,sp.patchString
+        from ${tableprefix}_permission sp order by ordernumber
+    </select>
+    <!--根据id查询权限-->
+    <select id="selectByPermissionId" resultType="com.sandnul.domain.security.SysPermission">
+        select sp.id,sp.description,sp.name,sp.pid,sp.patchString,sp.url,sp.orderNumber,sp.menuFlag
+        from ${tableprefix}_permission sp where id=#{id}
+    </select>
+    <!--新增权限-->
+    <insert id="insertSysPermission" useGeneratedKeys="true" keyProperty="id">
+        insert into  ${tableprefix}_permission(description,name,pid,patchString,url,orderNumber,menuFlag)
+        values(#{description},#{name},#{pid},#{patchString},#{url},#{orderNumber},#{menuFlag})
+    </insert>
+    <!--修改权限-->
+    <update id="updateSysPermission" >
+        update  ${tableprefix}_permission set description=#{description},name=#{name},
+        patchString=#{patchString},url=#{url},
+        orderNumber=#{orderNumber},menuFlag=#{menuFlag}
+        where id=#{id}
+    </update>
+    <!--删除权限-->
+    <delete id="deleteSysPermission" >
+        delete from   ${tableprefix}_permission
+        where id=#{id}
+    </delete>
+    <!--根据角色id左连接查询所有权限-->
+    <select id="selectRolePermission" resultType="com.sandnul.domain.security.SysPermission">
+        select sp.id,sp.description,sp.name,sp.pid,sp.patchString,rp.role_id roleId
+        from ${tableprefix}_permission sp left join
+        ${tableprefix}_role_permission rp on sp.id=rp.permission_id and rp.role_id=#{roleId}
+         order by ordernumber
+    </select>
+
+</mapper>

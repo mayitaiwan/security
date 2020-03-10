@@ -1,0 +1,459 @@
+@charset "utf-8";
+/*
+grid的容器样式
+*/
+.grid
+{
+font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+font-size: 12px;
+border: 1px solid #ccc;
+overflow: hidden;
+color: #000;
+margin:0;
+width:10px;
+}
+/*
+grid的按钮部分的div的样式
+*/
+.grid div.tDiv
+{
+background: #fafafa url(../images/bg.gif) repeat-x top; 
+border-bottom: 1px solid #ccc;
+padding:1px;
+height:18px;
+overflow: hidden;
+}
+/*
+grid的按钮部分的button的样式
+*/
+.grid div.tDiv button {
+font-size: 12px;
+border: 0px none;
+cursor: pointer;
+margin-right: 8px;
+outline: 0 none;
+overflow: visible;
+width: auto;
+padding-left: 18px
+}
+/*
+隐藏和显示列时，装载所有表头的table的div
+*/
+div.nDiv
+{
+background: #eee url(../images/line.gif) repeat-y -1px top;
+border: 1px solid #ccc;
+border-top: 0px;
+overflow: auto;
+position: absolute;
+/*height:100px;*/
+TOP: 10px;
+left: 500px;
+display:none;
+z-index:100;
+}
+/*
+隐藏和显示列时，装载所有表头的table
+*/
+div.nDiv table
+{
+margin: 2px;
+}
+/*
+隐藏和显示列时，td
+*/
+div.nDiv td
+{
+padding: 2px 3px;
+border: 1px solid #eee;
+cursor: default;
+}
+/*
+隐藏和显示列时，tr的mouseon
+*/
+div.nDiv tr:hover td, div.nDiv tr.ndcolover td
+{
+background: #d5effc url(../images/hl.png) repeat-x top;
+border: 1px solid #a8d8eb;
+}
+/*
+隐藏和显示列时，checkbox的td
+*/
+div.nDiv td.ndcol1
+{
+border-right: 1px solid #ccc;
+}
+/*
+隐藏和显示列时，右边的td
+*/ 
+div.nDiv td.ndcol2
+{
+border-left: 1px solid #fff;
+padding-right: 10px;
+}
+/*
+隐藏和显示列时，checkbox的td的mouseon
+*/
+div.nDiv tr:hover td.ndcol1, div.nDiv tr.ndcolover td.ndcol1
+{
+border-right: 1px solid #d2e3ec;
+}
+/*
+隐藏和显示列时，右边td的mouseon
+*/ 
+div.nDiv tr:hover td.ndcol2, div.nDiv tr.ndcolover td.ndcol2
+{
+border-left: 1px solid #eef8ff;
+}
+/*
+表体的table
+*/
+.grid div.bDiv table
+{
+margin-bottom: 2px;
+}
+/*
+鼠标移动到表头上后，出现一个三角形，此样式为那个三角形的样式
+*/
+div.nBtn
+{
+background: #fafafa url(../images/fhbg.gif) repeat-x bottom;
+border-right: 0px;
+border-bottom: 0px;
+border-top: 0px;
+height: 24px;
+width: 14px;
+border-left: 1px solid #ccc;
+position: absolute;
+top: 0px;
+left: 0px;
+cursor: pointer;
+display: none;
+}
+/*
+鼠标移动到表头上后，出现一个三角形，此样式为那个三角形的样式
+*/
+div.nBtn div
+{
+height: 24px;
+width: 12px;
+border-top:1px solid #fff;
+border-bottom:1px solid #fff;
+border-left: 1px solid #fff;
+background: url(../images/ddn.png) no-repeat center;
+} 
+/*按钮的分隔符*/
+.grid div.btnseparator
+{
+float: left;
+height: 22px;
+border-left: 1px solid #ccc;
+border-right: 1px solid #fff;
+margin: 1px;
+}
+/*表头的div*/
+.grid div.hDiv
+{
+background: #fafafa url(../images/fhbg.gif) repeat-x bottom;
+border: 0px;
+border-top: 0px solid #ccc;
+width:20000px;
+overflow: hidden;
+margin-left:0px;
+} 
+/*表头的table*/
+.grid div.hDiv table
+{
+border-right: 1px solid #fff;
+}
+/*表头的单选时，第一个th的div样式*/
+.grid div.hDiv div.singlehead
+{
+WIDTH:18px;
+height:18px;
+}
+/*列线div*/
+div.cLine{
+border:0px solid red;
+padding:0px;
+background: #fff;
+/*)display: block;*/
+position: absolute;
+height: 24px;
+width: 6px;
+cursor: col-resize;
+position:absolute;
+filter:alpha(opacity=0);
+-moz-opacity:.0;
+-khtml-opacity: .0;
+opacity: 0;
+}
+/*列线拖动的样式*/ 
+div.clDragging
+{
+filter:alpha(opacity=100);
+-moz-opacity:100;
+-khtml-opacity: 1;
+opacity: 1;
+background: url(../images/line.gif) repeat-y 2px center; 
+}
+/*表体div*/
+.grid div.bDiv
+{
+border: 0px;
+border-bottom: 1px solid #ccc;
+background: #fff;
+overflow: auto;
+}
+/*表体table*/
+.grid div.bDiv table
+{
+border-bottom: 1px solid #ccc;
+/* font-size:20;*/
+}
+/*表头th及表体td*/
+.grid div.hDiv th, .grid div.bDiv td /* common cell properties*/
+{
+text-align: left;
+border-right: 1px solid #ddd;
+border-left: 1px solid #fff;
+height:20px;
+font-size:12;
+overflow: hidden;
+vertical-align: middle !important;
+}
+/*表头排序时，逆排序样式*/
+.grid div.hDiv th div span.sdesc
+{
+padding-right:7px;
+background: url(../images/dn.png) no-repeat right;
+}
+/*表头排序时，顺排序样式*/
+.grid div.hDiv th div span.sasc
+{
+padding-right:7px;
+background: url(../images/up.png) no-repeat right;
+}
+/*表头th及交换列时被移动的div*/
+.grid div.hDiv th, div.colCopy
+{
+font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+font-weight: normal;
+height: 24px;
+cursor: default;
+white-space: nowrap;
+overflow: hidden;
+} 
+/*交换列时被移动的div*/
+div.colCopy {
+font-size: 12px;
+background: #fafafa url(../images/fhbg.gif) repeat-x bottom;
+border: 1px solid #ccc;
+border-bottom: 0px;
+}
+/*表头中的th里的div和表体中td里的div*/
+.grid div.hDiv th div,.grid div.bDiv td div{
+font-family: Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+font-size: 12px;
+padding: 0px;
+border: 0px solid red;
+overflow:hidden;
+}
+/*表头中的th里的div和表体中td里的div*/
+.grid div.hDiv th div{
+TEXT-ALIGN: center;
+}
+/*
+有选择配置时，左边的checkbox，被选中状态
+*/
+.grid div.bDiv tr.trSelected td div.checkbox,.grid div.hDiv tr.trSelected th div.checkbox
+{
+background-position:-23px 2px;
+}
+/*
+有选择配置时，被选中状态行
+*/
+.grid tr.trSelected td
+{
+background: #d5effc url(../images/hl.png) repeat-x top;
+border-right: 1px solid #d2e3ec;
+border-left: 1px solid #eef8ff;
+border-bottom: 1px solid #a8d8eb;
+}
+/*
+有选择配置时，左边的checkbox，未被选中状态
+*/
+.grid div.hDiv th div.checkbox,.grid div.bDiv td div.checkbox{
+WIDTH: 18px;
+height:18px;
+background: url(../images/row-check-sprite.gif) no-repeat center;
+background-position:2px 3px;
+}
+/*
+有选择配置时，单选配置，表头没有checkbox图标
+*/
+.grid div.hDiv th div.nocheckbox{
+WIDTH: 18px;
+height:18px;
+}
+/*
+列交换时，mouseover事件被动交换列的左三角样式
+*/
+div.cdropleft
+{
+background: url(../images/prev.gif) no-repeat left;
+}
+/*
+列交换时，mouseover事件被动交换列的右三角样式
+*/
+div.cdropright
+{
+background: url(../images/next.gif) no-repeat right;
+}
+/*列交换时firefox*/
+div.firefoxcdrop{
+top: -24px;
+margin-top: -16px;
+}
+/*表体的td中的div*/
+.grid div.bDiv td div
+{
+border-top: 0px solid #fff;
+padding-bottom: 0px;
+}
+/*表体的被单行的td*/
+.grid tr.erow td
+{
+background: #eeeeee;
+/*border-bottom: 1px solid #f7f7f7;*/
+}
+/*表体的tr的mouseon*/
+.grid div.bDiv tr:hover td, 
+.grid div.bDiv tr.trOver td
+{
+background: #d9ebf5;
+border-left: 1px solid #eef8ff;
+}
+/*分页栏,在gridpagediv.jsp中*/
+.grid div.pDiv
+{
+background: url(../images/wbg.gif) repeat-x 0 -1px;
+border: 0px;
+/*border: 1px solid #ccc;
+border-top: 0px;*/
+width:2000px;
+overflow: hidden;
+white-space: nowrap;
+margin:0;
+}
+/*分页栏,在gridpagediv.jsp中*/
+.grid div.pDiv .pcontrol
+{}
+/*分页栏,在gridpagediv.jsp中*/
+.grid div.pDiv .pButton
+{
+width: 22px;
+height: 22px;
+border: 0px;
+cursor: pointer;
+overflow: hidden;
+}
+/*分页栏,第一页，在gridpagediv.jsp中*/
+.pDiv .pFirst
+{
+background: url(../images/first.gif) no-repeat center;
+}
+/*分页栏,前一页，在gridpagediv.jsp中*/ 
+.pDiv .pPrev
+{
+background: url(../images/prev.gif) no-repeat center;
+}
+/*分页栏,下一页，在gridpagediv.jsp中*/
+.pDiv .pNext
+{
+background: url(../images/next.gif) no-repeat center;
+}
+/*分页栏,最后一页，在gridpagediv.jsp中*/
+.pDiv .pLast
+{
+background: url(../images/last.gif) no-repeat center;
+}
+/*分页栏,刷新，在gridpagediv.jsp中*/
+.pDiv .pReload
+{
+background: url(../images/load.png) no-repeat center;
+}
+/*分页栏,正在刷新，在gridpagediv.jsp中*/
+.pDiv .pReload.loading
+{
+background: url(../images/load.gif) no-repeat center;
+} 
+/*#navigation {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 9pt;
+float:right;
+}*/
+
+/*
+* 小图标start
+*/
+/*查看按钮*/
+.icon-search {
+background: url(../images/search.png) no-repeat scroll 0 0 transparent ;
+}
+/*增加按钮*/
+.icon-add {
+background: url(../images/add.png) no-repeat scroll 0 0 transparent ;
+}
+/*编辑按钮*/
+.icon-edit {
+background: url(../images/edit.jpg) no-repeat scroll 0 0 transparent ;
+}
+/*删除按钮*/
+.icon-delete {
+background: url(../images/delete.png) no-repeat scroll 0 0 transparent ;
+}
+/*保存按钮*/
+.iconSave {
+background: url(../images/save.png) no-repeat scroll 0 0 transparent ;
+}
+.iconReset {
+background: url(../images/reset.png) no-repeat scroll 0 0 transparent ;
+}
+.iconBack {
+background: url(../images/back.gif) no-repeat scroll 0 0 transparent ;
+}
+.iconMinus {
+background: url(../images/minus.gif) no-repeat scroll 0 0 transparent ;
+}
+.iconPlus {
+background: url(../images/plus.gif) no-repeat scroll 0 0 transparent ;
+}
+.gridtitle
+{
+font-size:12px;
+font-weight: normal;
+line-height: 22px;
+font-weight: bold;
+text-align: left;
+border:1px solid;
+background: url(../images/bgxiao.jpg) repeat scroll 0 0 transparent;
+border-color: #C3DAF9;
+color: #1864AC;
+text-indent: 8pt;
+}
+.subtr
+{
+background: #fafafa url(../images/fhbg.gif) repeat-x bottom;
+border:1px solid #eee;
+}
+.subtrbutton {
+font-size: 12px;
+border: 0px none;
+cursor: pointer;
+margin-right: 8px;
+outline: 0 none;
+overflow: visible;
+width: auto;
+padding-left: 18px
+}

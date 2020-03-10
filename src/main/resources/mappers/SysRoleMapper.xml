@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sandnul.repository.SysRoleMapper">
+    <!-- 根据相关条件分页查找角色 -->
+    <select id="selectRoleByPage"
+            resultType="com.sandnul.domain.security.SysRole">
+        select
+         id,name,roledesc
+        from
+        ${tableprefix}_role
+        <trim prefix="where" prefixOverrides="and">
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </trim>
+        LIMIT #{startIndex},#{maxCount};
+    </select>
+
+    <!-- 根据相关条件查找角色总数 -->
+    <select id="selectCount"
+            resultType="java.lang.Integer">
+        select
+        count(1) total
+        from
+        ${tableprefix}_role
+        <trim prefix="where" prefixOverrides="and">
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </trim>
+    </select>
+
+
+    <!-- 新增角色 -->
+    <insert id="insertRole">
+		insert into
+		${tableprefix}_role(name,roledesc)
+		values(
+		#{name},#{roleDesc}
+		)
+	</insert>
+
+    <!-- 根据角色id查找角色信息 -->
+    <select id="selectByRoleId"
+            resultType="com.sandnul.domain.security.SysRole">
+		select
+		id,name,roledesc
+		from
+		${tableprefix}_role
+		where
+		id=#{id}
+	</select>
+    <!-- 修改角色信息 -->
+    <update id="updateRole" >
+		update
+		${tableprefix}_role
+		set
+		name=#{name},roledesc=#{roleDesc}
+		where
+		id=#{id}
+	</update>
+    <!-- 删除角色信息 -->
+    <delete id="deleteRoles">
+		delete from
+		${tableprefix}_role
+		where
+		id in(${ids})
+	</delete>
+    <!-- 根据角色名称查询总数，校验是否有相同角色名称 -->
+    <select id="selectCountByRoleName" resultType="java.lang.Integer">
+        select
+        count(1) total
+        from
+        ${tableprefix}_role
+        where
+        name=#{name}
+        <if test="id!=null and id!=-1">
+            and id!=#{id}
+        </if>
+	</select>
+    <!-- 根据用户id分页查询用户角色 -->
+    <select id="selectUserRoleByPage" resultType="com.sandnul.domain.security.SysRole">
+        select
+        role.id,role.name,
+        role.roledesc ,ur.user_id userId
+        from
+        ${tableprefix}_role role left join ${tableprefix}_User_role ur on role.id=ur.role_id and ur.user_id=#{userId}
+        <trim prefix="where">
+            <if test="name!=null and name!=''">
+                name like concat('%',#{name},'%')
+            </if>
+        </trim>
+        LIMIT #{startIndex},#{maxCount}
+    </select>
+</mapper>

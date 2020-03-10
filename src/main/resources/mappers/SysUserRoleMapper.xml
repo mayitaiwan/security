@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sandnul.repository.SysUserRoleMapper">
+    <!-- 根据用户id删除用户角色信息 -->
+    <delete id="deleteUserRoleByUserId">
+		delete from
+		${tableprefix}_user_role
+		where
+		user_id in(${ids})
+	</delete>
+	<!-- 根据角色id删除用户角色信息 -->
+	<delete id="deleteUserRoleByRoleId">
+		delete from
+		${tableprefix}_user_role
+		where
+		role_id in(${ids})
+	</delete>
+	<!-- 根据用户id角色id(角色id可多个)删除用户角色信息 -->
+	<delete id="deleteUserRoleByUserIdRoleIds">
+		delete from
+		${tableprefix}_user_role
+		where
+		user_id=#{userId} and role_id in(${delRoleIds})
+	</delete>
+	<!--新增用户角色信息 -->
+	<insert id="insertSysUserRole">
+		insert into ${tableprefix}_user_role(user_id,role_id)
+		values(#{userId},#{roleId})
+	</insert>
+	<!-- 根据角色id用户id(用户id可多个)删除用户角色信息 -->
+	<delete id="deleteUserRoleByRoleIdUserIds">
+		delete from
+		${tableprefix}_user_role
+		where
+		role_id=#{roleId} and user_id in(${delUserIds})
+	</delete>
+
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sandnul.repository.SysUserMapper">
+    <select id="findUserByUserAcccount" resultType="com.sandnul.domain.security.SysUser">
+        select id,password,username,useraccount from ${tableprefix}_user WHERE userAccount = #{userAccount}
+    </select>
+
+    <select id="findRolesByUserAcccount" resultType="com.sandnul.domain.security.SysRole">
+        select sr.id,sr.name
+        from ${tableprefix}_user su
+         join ${tableprefix}_user_role  sur on su.id = sur.user_id
+         join ${tableprefix}_role sr on sur.role_id = sr.id
+        where su.userAccount = #{userAccount}
+    </select>
+    
+    <!-- 根据相关条件分页查找用户 -->
+    <select id="selectUsersByPage"
+            resultType="com.sandnul.domain.security.SysUser">
+        select
+         id,useraccount ,username,userdesc
+        from
+        ${tableprefix}_user user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="userAccount!=null and userAccount!=''">
+                and useraccount like concat('%',#{userAccount},'%')
+            </if>
+            <if test="userName!=null and userName!=''">
+                and username like concat('%',#{userName},'%')
+            </if>
+        </trim>
+        LIMIT #{startIndex},#{maxCount};
+    </select>
+
+    <!-- 根据相关条件查找用户总数 -->
+    <select id="selectCount"
+            resultType="java.lang.Integer">
+        select
+        count(1) total
+        from
+        ${tableprefix}_user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="userAccount!=null and userAccount!=''">
+                and useraccount like concat('%',#{userAccount},'%')
+            </if>
+            <if test="userName!=null and userName!=''">
+                and username like concat('%',#{userName},'%')
+            </if>
+        </trim>
+    </select>
+
+
+    <!-- 新增用户 -->
+    <insert id="insertUser">
+		insert into
+		${tableprefix}_User(useraccount ,username ,password
+		,userdesc )
+		values(
+		#{userAccount},#{userName},#{password},#{userDesc}
+		)
+	</insert>
+
+    <!-- 根据用户账号查询总数，校验是否有相同账号 -->
+    <select id="selectCountByUserAccount" resultType="java.lang.Integer">
+        select
+        count(1) total
+        from
+        ${tableprefix}_user
+        where
+        useraccount=#{userAccount}
+        <if test="id!=null and id!=-1">
+            and id!=#{id}
+        </if>
+    </select>
+
+    <!-- 根据用户id查找用户信息 -->
+    <select id="selectByUserId"
+            resultType="com.sandnul.domain.security.SysUser">
+		select
+		id,useraccount ,username,userdesc
+		from
+		${tableprefix}_user
+		where
+		id=#{id}
+	</select>
+    <!-- 修改用户信息 -->
+    <update id="updateUser" >
+		update
+		${tableprefix}_user
+		set
+		username=#{userName},
+		userdesc=#{userDesc}
+		where
+		id=#{id}
+	</update>
+    <!-- 删除用户信息 -->
+    <delete id="deleteUsers">
+		delete from
+		${tableprefix}_user
+		where
+		id in(${ids})
+	</delete>
+    <!-- 根据角色id分页查询角色用户 -->
+    <select id="selectRoleUserByPage"
+            resultType="com.sandnul.domain.security.SysUser">
+        select
+        user.id,user.useraccount ,user.username,user.userdesc,ur.role_id roleId
+        from
+        ${tableprefix}_user user left join ${tableprefix}_user_role ur on user.id=ur.user_id and ur.role_id=#{roleId}
+        <trim prefix="where" prefixOverrides="and">
+            <if test="userAccount!=null and userAccount!=''">
+                and useraccount like concat('%',#{userAccount},'%')
+            </if>
+            <if test="userName!=null and userName!=''">
+                and username like concat('%',#{userName},'%')
+            </if>
+        </trim>
+        LIMIT #{startIndex},#{maxCount};
+	</select>
+
+
+</mapper>
